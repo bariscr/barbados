@@ -2,7 +2,7 @@ project:
   type: website
   render: 
     - index.qmd
-    - human-rights.qmd
+    - homicide.qmd
 
 website:
   title: ""
@@ -10,7 +10,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: human-rights.qmd
+      - href: homicide.qmd
         text: homicide
 
 
