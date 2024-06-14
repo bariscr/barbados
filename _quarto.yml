@@ -10,7 +10,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - human-rights.qmd
+      - href: human-rights.qmd
+        text: homicide
+
 
 format:
   html:
