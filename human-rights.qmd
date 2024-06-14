@@ -1,0 +1,255 @@
+---
+title: "SDG Indicators for Homicide in Barbados MCO"
+author: ""
+format: 
+  dashboard:
+    embed-resources: true
+execute: 
+  echo: false
+  freeze: auto
+---
+
+
+```{r}
+#| label: Library
+library(dplyr)
+library(htmltools)
+library(reactable)
+library(stringr)
+library(tidyr)
+library(plotly)
+```
+
+
+```{r}
+#| label: Countries selection
+countries <- readRDS("data/countries.rds")
+barbados_mco_country_code_list <- 
+    c(660, 28, 52, 212, 308, 500, 659, 662, 670, 92)
+countries_bmco <- 
+    readRDS("data/countries_barbados_mco.rds") |> 
+    mutate(country.code = as.character(country.code))
+```
+
+
+```{r}
+#| label: Data
+sdg_series <- readRDS("data/sdg_series.rds")
+
+sdg_indicators <- readRDS("data/sdg_indicators.rds")
+
+sdg_data <- 
+    readRDS("data/sdg_caribbean.rds") |> 
+     filter(!is.na(value)) |> 
+     filter(value != "NaN") 
+```
+
+
+```{r}
+sdg_series <- 
+    sdg_indicators |> 
+    select(description, series) |>
+    rename(indicator_description = description) |>
+    unnest(series)
+```
+
+
+```{r}
+sdg_homicide_data <- 
+sdg_data |> 
+  filter(geoAreaCode %in% barbados_mco_country_code_list) |>
+  filter(series %in% c("VC_IHR_PSRC", "VC_IHR_PSRCN")) |>
+  left_join(countries_bmco, by = c("geoAreaCode" = "country.code"))  |> 
+  select(name, timePeriodStart, series, Sex, value) |> 
+  left_join(sdg_series, by = c("series" = "code")) |> 
+   select(name, timePeriodStart,  indicator, series, description, Sex, value) 
+
+```
+
+### Tabset {.tabset}
+
+#### Proportion
+
+```{r}
+selected_indicator <- "VC_IHR_PSRC"
+
+selected_indicator_name <- 
+sdg_series |> 
+  filter(code == selected_indicator) |> 
+  pull(description) |> 
+  unique()
+
+p <- plot_ly()
+
+p_data <- 
+  sdg_homicide_data %>%
+  filter(series == selected_indicator) %>%
+  select(-c(indicator, series)) %>%
+  mutate(value = as.numeric(value),
+         timePeriodStart = as.factor(timePeriodStart)) %>%
+  rename(sex = Sex) %>%
+  arrange(timePeriodStart)
+
+# Re-level the factor to ensure consistent order
+p_data$timePeriodStart <- factor(p_data$timePeriodStart, levels = unique(p_data$timePeriodStart))
+
+# Initialize a list to store visibility vectors for each dropdown option
+visibility_list <- list()
+
+# Set an initial name to be visible
+initial_name <- unique(p_data$name)[1]
+
+# Create traces and store visibility vectors
+trace_index <- 1
+for (name in unique(p_data$name)) {
+  for (sex in unique(p_data$sex)) {
+    trace_data <- p_data %>% filter(name == !!name, sex == !!sex)
+    p <- p %>%
+      add_trace(
+        data = trace_data,
+        y = ~value,
+        x = ~factor(timePeriodStart, levels = unique(p_data$timePeriodStart)), # Ensure consistent factor levels
+        name = paste(name, sex),  # Combine name and sex for the trace name
+        legendgroup = sex,  # Grouping by sex for the legend
+        color = ~sex,
+        mode = "lines+markers",
+        type = 'scatter',
+        hoverinfo = 'text',
+        text = ~paste0(name, " ", sex, " ", timePeriodStart, " ", value),
+        textposition = 'auto',
+        visible = name == initial_name,
+        showlegend = TRUE # Always show legend for sex
+      )
+    
+    # Update visibility vector for the current name
+    if (is.null(visibility_list[[name]])) {
+      visibility_list[[name]] <- rep(FALSE, length(unique(p_data$name)) * length(unique(p_data$sex)))
+    }
+    visibility_list[[name]][trace_index] <- TRUE
+    trace_index <- trace_index + 1
+  }
+}
+
+# Customize the layout with the dropdown menu
+dropdown_buttons <- lapply(names(visibility_list), function(name) {
+  list(
+    method = "restyle",
+    args = list("visible", visibility_list[[name]]),
+    label = name)
+})
+
+# Apply layout and dropdown menu
+p <- p %>%
+  layout(
+    title = list(text = selected_indicator_name, standoff = 20),
+    xaxis = list(title = "Year"),
+    yaxis = list(title = list(text = "Per 100,000 population", standoff = 10)),
+    margin = list(l = 100, t = 200, b = 100, r = 10),
+    updatemenus = list(
+      list(
+        buttons = dropdown_buttons,
+        direction = "down",
+        showactive = TRUE,
+        x = 0.3,
+        y = 1.1 # move the dropdown higher on the plot
+      )
+    )
+  )
+
+# Display the plot
+p
+
+```
+
+#### Number
+
+```{r}
+selected_indicator <- "VC_IHR_PSRCN"
+
+selected_indicator_name <- 
+sdg_series |> 
+  filter(code == selected_indicator) |> 
+  pull(description) |> 
+  unique()
+
+p <- plot_ly()
+
+p_data <- 
+  sdg_homicide_data %>%
+  filter(series == selected_indicator) %>%
+  select(-c(indicator, series)) %>%
+  mutate(value = as.numeric(value),
+         timePeriodStart = as.factor(timePeriodStart)) %>%
+  rename(sex = Sex) %>%
+  arrange(timePeriodStart)
+
+# Re-level the factor to ensure consistent order
+p_data$timePeriodStart <- factor(p_data$timePeriodStart, levels = unique(p_data$timePeriodStart))
+
+# Initialize a list to store visibility vectors for each dropdown option
+visibility_list <- list()
+
+# Set an initial name to be visible
+initial_name <- unique(p_data$name)[1]
+
+# Create traces and store visibility vectors
+trace_index <- 1
+for (name in unique(p_data$name)) {
+  for (sex in unique(p_data$sex)) {
+    trace_data <- p_data %>% filter(name == !!name, sex == !!sex)
+    p <- p %>%
+      add_trace(
+        data = trace_data,
+        y = ~value,
+        x = ~factor(timePeriodStart, levels = unique(p_data$timePeriodStart)), # Ensure consistent factor levels
+        name = paste(name, sex),  # Combine name and sex for the trace name
+        legendgroup = sex,  # Grouping by sex for the legend
+        color = ~sex,
+        mode = "lines+markers",
+        type = 'scatter',
+        hoverinfo = 'text',
+        text = ~paste0(name, " ", sex, " ", timePeriodStart, " ", value),
+        textposition = 'auto',
+        visible = name == initial_name,
+        showlegend = TRUE # Always show legend for sex
+      )
+    
+    # Update visibility vector for the current name
+    if (is.null(visibility_list[[name]])) {
+      visibility_list[[name]] <- rep(FALSE, length(unique(p_data$name)) * length(unique(p_data$sex)))
+    }
+    visibility_list[[name]][trace_index] <- TRUE
+    trace_index <- trace_index + 1
+  }
+}
+
+# Customize the layout with the dropdown menu
+dropdown_buttons <- lapply(names(visibility_list), function(name) {
+  list(
+    method = "restyle",
+    args = list("visible", visibility_list[[name]]),
+    label = name)
+})
+
+# Apply layout and dropdown menu
+p <- p %>%
+  layout(
+    title = list(text = selected_indicator_name, standoff = 20),
+    xaxis = list(title = "Year"),
+    yaxis = list(title = list(text = "Number", standoff = 10)),
+    margin = list(l = 100, t = 200, b = 100, r = 10),
+    updatemenus = list(
+      list(
+        buttons = dropdown_buttons,
+        direction = "down",
+        showactive = TRUE,
+        x = 0.3,
+        y = 1.1 # move the dropdown higher on the plot
+      )
+    )
+  )
+
+# Display the plot
+p
+
+```

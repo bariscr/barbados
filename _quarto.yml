@@ -1,0 +1,22 @@
+project:
+  type: website
+  render: 
+    - index.qmd
+    - human-rights.qmd
+
+website:
+  title: ""
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - human-rights.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+execute:
+  freeze: auto
