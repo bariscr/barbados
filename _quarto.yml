@@ -11,7 +11,7 @@ website:
       - href: index.qmd
         text: Home
       - href: homicide.qmd
-        text: homicide
+        text: Homicide
 
 
 format:

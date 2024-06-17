@@ -1,5 +1,5 @@
 ---
-title: "SDG Indicators for Homicide in Barbados MCO"
+title: "SDG Indicators for Homicide"
 author: ""
 format: 
   dashboard:
@@ -51,6 +51,7 @@ sdg_series <-
     select(description, series) |>
     rename(indicator_description = description) |>
     unnest(series)
+
 ```
 
 
@@ -252,4 +253,10 @@ p <- p %>%
 # Display the plot
 p
 
+```
+
+#### SDG Series
+
+```{r}
+sdg_series |> reactable(searchable = TRUE)
 ```

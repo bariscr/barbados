@@ -1,1 +1,7 @@
 /.quarto/
+child/data_read.R
+data/ndc.rds
+functions/reactable_filters.R
+.quarto/idx/index.qmd.json
+.json
+
