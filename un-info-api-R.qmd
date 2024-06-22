@@ -115,7 +115,7 @@ results <- content$results
 # Plan details for selected plan
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/plan/1193"
+url <- "https://api.uninfo.org/vx.y/plan/YOUR_PLAN_ID"
 
 response <- GET(url, headers)
 
@@ -143,7 +143,7 @@ entityPrototypes |>
 # Outcomes
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=OC&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=1193"
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=OC&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=YOUR_PLAN_ID"
 
 response <- GET(url, encode = "json")
 content <- content(response)
@@ -177,7 +177,7 @@ outcomes |>
 # Outputs
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=OU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=1193"
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=OU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=YOUR_PLAN_ID"
 
 response <- GET(url, encode = "json")
 content <- content(response)
@@ -218,7 +218,7 @@ url <- "https://api.uninfo.org/vx.y/plan/entity/search"
 
 body <- list(
   coreentityTypeIds = list(9),
-  planIds = list(1193)
+  planIds = list(YOUR_PLAN_ID)
 )
 
 suboutput_id_list <- list()
@@ -243,7 +243,7 @@ suboutput_id_list <- suboutput_id_list |> unlist()
 # Get the suboutput id and expenditure info
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=SOU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=1193"
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=SOU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=YOUR_PLAN_ID"
 
 response <- GET(url, headers, encode = "json")
 content <- content(response)
@@ -299,7 +299,7 @@ data |> reactable()
 # All suboutputs in long format
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&planIds=1193"
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&planIds=YOUR_PLAN_ID"
 
 content <- fromJSON(url)
 
@@ -323,7 +323,7 @@ content2 |> distinct(id) |> nrow()
 # Markers and financials
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=SOU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&Sustaining%20Peace%20MarkerHumanitarian%20Marker&planIds=1193"
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=SOU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&Sustaining%20Peace%20MarkerHumanitarian%20Marker&planIds=YOUR_PLAN_ID"
 
 content <- fromJSON(url)
 
@@ -420,7 +420,7 @@ content <- content(response)
 # Plan public
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/plan/public/1193"
+url <- "https://api.uninfo.org/vx.y/plan/public/YOUR_PLAN_ID"
 response <- GET(url, headers)
 content <- content(response)
 
@@ -430,7 +430,7 @@ content$planEntities
 # Report on suboutputs with missing information and aggregated statistics
 
 ```{r}
-url <- "https://api.uninfo.org/vx.y/plan/evaluate/1193"
+url <- "https://api.uninfo.org/vx.y/plan/evaluate/YOUR_PLAN_ID"
 response <- GET(url, headers)
 content <- content(response)
 

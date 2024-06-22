@@ -4,6 +4,7 @@ project:
     - index.qmd
     - analysis.qmd
     - un-info-API-R.qmd
+    - data_sources.qmd
 
 website:
   title: ""
@@ -15,6 +16,8 @@ website:
         text: Analysis
       - href: un-info-API-R.qmd
         text: UN INFO API
+      - href: data_sources.qmd
+        text: Data Sources
 
 format:
   html:
