@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bariscr.github.io/barbados/homicide.html</loc>
-    <lastmod>2024-06-18T11:37:36.840Z</lastmod>
+    <loc>https://bariscr.github.io/barbados/un-info-API-R.html</loc>
+    <lastmod>2024-06-22T20:43:03.039Z</lastmod>
   </url>
   <url>
     <loc>https://bariscr.github.io/barbados/index.html</loc>
     <lastmod>2024-06-17T23:59:23.176Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bariscr.github.io/barbados/homicide.html</loc>
+    <lastmod>2024-06-18T15:20:55.544Z</lastmod>
   </url>
 </urlset>

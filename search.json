@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "un-info-API-R.html",
+    "href": "un-info-API-R.html",
+    "title": "UN INFO API",
+    "section": "",
+    "text": "Use cases for the UN INFO API with R.\nAPI main page\nWith support from:\nHadrien Jouet\nGitlab link"
+  },
+  {
+    "objectID": "un-info-API-R.html#entityprototypes",
+    "href": "un-info-API-R.html#entityprototypes",
+    "title": "UN INFO API",
+    "section": "entityPrototypes",
+    "text": "entityPrototypes\n\nentityPrototypes |&gt; \n    select(id, code, coreentityTypeId, name)"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Barbados Data",
