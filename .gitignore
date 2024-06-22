@@ -1,4 +1,5 @@
 /.quarto/
+data/
 child/data_read.R
 data/ndc.rds
 functions/reactable_filters.R
