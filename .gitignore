@@ -7,3 +7,4 @@ functions/reactable_filters.R
 
 .DS_Store
 .gitignore
+data
