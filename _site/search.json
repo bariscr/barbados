@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Barbados Data",
-    "section": "",
-    "text": "…"
-  },
-  {
     "objectID": "un-info-API-R.html",
     "href": "un-info-API-R.html",
     "title": "UN INFO API",
@@ -19,5 +12,12 @@
     "title": "UN INFO API",
     "section": "entityPrototypes",
     "text": "entityPrototypes\n\nentityPrototypes |&gt; \n    select(id, code, coreentityTypeId, name)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Barbados Data",
+    "section": "",
+    "text": "…"
   }
 ]

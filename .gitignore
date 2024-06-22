@@ -1,5 +1,4 @@
 /.quarto/
-data/
 child/data_read.R
 data/ndc.rds
 functions/reactable_filters.R
@@ -7,4 +6,18 @@ functions/reactable_filters.R
 .json
 .DS_Store
 data/
+_site/site_libs/crosstalk-1.2.0/css/crosstalk.min.css
+_site/site_libs/crosstalk-1.2.0/js/crosstalk.js
+_site/site_libs/crosstalk-1.2.0/js/crosstalk.js.map
+_site/site_libs/crosstalk-1.2.0/js/crosstalk.min.js
+_site/site_libs/crosstalk-1.2.0/js/crosstalk.min.js.map
+_site/site_libs/crosstalk-1.2.0/scss/crosstalk.scss
+_site/site_libs/plotly-binding-4.10.2/plotly.js
+_site/site_libs/react-17.0.0/AUTHORS
+_site/site_libs/react-17.0.0/LICENSE.txt
+_site/site_libs/react-17.0.0/react-dom.min.js
+_site/site_libs/react-17.0.0/react.min.js
+_site/search.json
+_site/sitemap.xml
 .gitignore
+_site/search.json
