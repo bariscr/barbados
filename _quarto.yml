@@ -2,7 +2,7 @@ project:
   type: website
   render: 
     - index.qmd
-    - homicide.qmd
+    - analysis.qmd
     - un-info-API-R.qmd
 
 website:
@@ -11,11 +11,10 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: homicide.qmd
-        text: Homicide
+      - href: analysis.qmd
+        text: Analysis
       - href: un-info-API-R.qmd
         text: UN INFO API
-
 
 format:
   html:
