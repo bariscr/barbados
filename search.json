@@ -14,13 +14,6 @@
     "text": "entityPrototypes\n\nentityPrototypes |&gt; \n    select(id, code, coreentityTypeId, name)"
   },
   {
-    "objectID": "data_sources.html",
-    "href": "data_sources.html",
-    "title": "Data Sources",
-    "section": "",
-    "text": "source(\"child/library.R\")\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nhere() starts at /Users/barisucar/Documents/projects-2/barbados\n\n\n\nAttaching package: 'shiny'\n\n\nThe following object is masked from 'package:jsonlite':\n\n    validate\n\n\nThe following object is masked from 'package:crosstalk':\n\n    getDefaultReactiveDomain\n\nsource(\"functions/reactable_filters.R\")\nsource(\"functions/click_renderer.R\")\n\n\nfromJSON(\"data/sources.json\") |&gt; \n  mutate(link2 = link) |&gt; \n  relocate(link2, .before = link) |&gt;\n  reactable(\n  columns = list(\n    organisation = colDef(filterInput = selectFilter(\"filter1\")),\n    link2 = colDef(cell = click_renderer, name = \"Go to Website\", width = 100)\n  ),\n  filterable = TRUE,\n  wrap = TRUE,\n  resizable = TRUE,\n  defaultPageSize = 10,\n  minRows = 5,\n  elementId = \"filter1\"\n)"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "….",

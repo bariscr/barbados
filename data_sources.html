@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -178,60 +144,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"child/library.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/barisucar/Documents/projects-2/barbados</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'shiny'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:jsonlite':
-
-    validate</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:crosstalk':
-
-    getDefaultReactiveDomain</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"functions/reactable_filters.R"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"functions/click_renderer.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fromJSON</span>(<span class="st">"data/sources.json"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">link2 =</span> link) <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(link2, <span class="at">.before =</span> link) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reactable</span>(</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">organisation =</span> <span class="fu">colDef</span>(<span class="at">filterInput =</span> <span class="fu">selectFilter</span>(<span class="st">"filter1"</span>)),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">link2 =</span> <span class="fu">colDef</span>(<span class="at">cell =</span> click_renderer, <span class="at">name =</span> <span class="st">"Go to Website"</span>, <span class="at">width =</span> <span class="dv">100</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">filterable =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">wrap =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">resizable =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">defaultPageSize =</span> <span class="dv">10</span>,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">minRows =</span> <span class="dv">5</span>,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">elementId =</span> <span class="st">"filter1"</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="reactable html-widget html-fill-item" id="filter1" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="filter1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"organisation":["UN","UN","UN","UN","IOM","IOM","IOM","IOM","IOM","CTDC","UNFCCC","UN"],"title":["SDG","SDG","SDG","SDG","","","","","","","","UN 2.0 Quintet of Change"],"website":["SDG Data Portal","SDG Metadata","SDG Data collection and focal points","SDG API","Displacement Tracking Matrix (DTM)","Migration Data Portal","Global Migration Data Analysis Center (GMDAC)","World Migration Report 2022","Missing Migrants Project","The Counter Trafficking Data Collaborative","Nationally Determined Contributions",""],"link2":["https://unstats.un.org/sdgs/dataportal","https://unstats.un.org/wiki/display/SDGeHandbook/Home","https://unstats.un.org/sdgs/dataContacts/","https://unstats.un.org/sdgapi/swagger/","https://dtm.iom.int","https://www.migrationdataportal.org","https://gmdac.iom.int","https://worldmigrationreport.iom.int/wmr-2022-interactive/","https://missingmigrants.iom.int","https://www.ctdatacollaborative.org/map","https://unfccc.int/process-and-meetings/the-paris-agreement/nationally-determined-contributions-ndcs","https://www.un.org/two-zero/en/"],"link":["https://unstats.un.org/sdgs/dataportal","https://unstats.un.org/wiki/display/SDGeHandbook/Home","https://unstats.un.org/sdgs/dataContacts/","https://unstats.un.org/sdgapi/swagger/","https://dtm.iom.int","https://www.migrationdataportal.org","https://gmdac.iom.int","https://worldmigrationreport.iom.int/wmr-2022-interactive/","https://missingmigrants.iom.int","https://www.ctdatacollaborative.org/map","https://unfccc.int/process-and-meetings/the-paris-agreement/nationally-determined-contributions-ndcs","https://www.un.org/two-zero/en/"],"note":["Country profile provides all information.","","","","","Multiple datasets and dashboards","","Report is provided as interactive visuals. Good practice","Missing Migrants Project records since 2014 people who die in the process of migration towards an international destination, regardless of their legal status. As collecting information is challenging, all figures remain undercounts. The locations in most cases are approximate.","The Counter-Trafficking Data Collaborative is the first global data hub on human trafficking, publishing harmonized data from counter-trafficking organizations around the world.",null,null],"note2":[null,null,null,null,null,null,null,null,null,"Multiple datasets",null,null],"type":[null,null,null,null,null,null,null,null,null,null,null,"Document"]},"columns":[{"id":"organisation","name":"organisation","type":"character","filterInput":{"name":"select","attribs":{"aria-label":"Filter organisation","style":{"width":"100%","height":"100%"},"onChange":"function(_e){(function(event){\n        const value = event.target.value\n        Reactable.setFilter('filter1', 'organisation', value === '__ALL__' ? undefined : value)\n      }).apply(event.target,[_e])}"},"children":[{"name":"option","attribs":{"value":"__ALL__"},"children":["All"]},{"name":"option","attribs":{},"children":["UN"]},{"name":"option","attribs":{},"children":["IOM"]},{"name":"option","attribs":{},"children":["CTDC"]},{"name":"option","attribs":{},"children":["UNFCCC"]}]}},{"id":"title","name":"title","type":"character"},{"id":"website","name":"website","type":"character"},{"id":"link2","name":"Go to Website","type":"character","cell":[{"name":"a","attribs":{"href":"https://unstats.un.org/sdgs/dataportal","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unstats.un.org/wiki/display/SDGeHandbook/Home","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unstats.un.org/sdgs/dataContacts/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unstats.un.org/sdgapi/swagger/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://dtm.iom.int","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://www.migrationdataportal.org","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://gmdac.iom.int","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://worldmigrationreport.iom.int/wmr-2022-interactive/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://missingmigrants.iom.int","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://www.ctdatacollaborative.org/map","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unfccc.int/process-and-meetings/the-paris-agreement/nationally-determined-contributions-ndcs","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://www.un.org/two-zero/en/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]}],"width":100},{"id":"link","name":"link","type":"character"},{"id":"note","name":"note","type":"character"},{"id":"note2","name":"note2","type":"character"},{"id":"type","name":"type","type":"character"}],"resizable":true,"filterable":true,"defaultPageSize":10,"minRows":5,"elementId":"filter1","dataKey":"d3e58fc23ad844fde458da150df0750f"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.0.filterInput.attribs.onChange"],"jsHooks":[]}</script>
+<script type="application/json" data-for="filter1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"organisation":["UN","UN","UN","UN","IOM","IOM","IOM","IOM","IOM","CTDC","UNFCCC","UN"],"title":["SDG","SDG","SDG","SDG","","","","","","","","UN 2.0 Quintet of Change"],"website":["SDG Data Portal","SDG Metadata","SDG Data collection and focal points","SDG API","Displacement Tracking Matrix (DTM)","Migration Data Portal","Global Migration Data Analysis Center (GMDAC)","World Migration Report 2022","Missing Migrants Project","The Counter Trafficking Data Collaborative","Nationally Determined Contributions",""],"link2":["https://unstats.un.org/sdgs/dataportal","https://unstats.un.org/wiki/display/SDGeHandbook/Home","https://unstats.un.org/sdgs/dataContacts/","https://unstats.un.org/sdgapi/swagger/","https://dtm.iom.int","https://www.migrationdataportal.org","https://gmdac.iom.int","https://worldmigrationreport.iom.int/wmr-2022-interactive/","https://missingmigrants.iom.int","https://www.ctdatacollaborative.org/map","https://unfccc.int/process-and-meetings/the-paris-agreement/nationally-determined-contributions-ndcs","https://www.un.org/two-zero/en/"]},"columns":[{"id":"organisation","name":"organisation","type":"character","filterInput":{"name":"select","attribs":{"aria-label":"Filter organisation","style":{"width":"100%","height":"100%"},"onChange":"function(_e){(function(event){\n        const value = event.target.value\n        Reactable.setFilter('filter1', 'organisation', value === '__ALL__' ? undefined : value)\n      }).apply(event.target,[_e])}"},"children":[{"name":"option","attribs":{"value":"__ALL__"},"children":["All"]},{"name":"option","attribs":{},"children":["UN"]},{"name":"option","attribs":{},"children":["IOM"]},{"name":"option","attribs":{},"children":["CTDC"]},{"name":"option","attribs":{},"children":["UNFCCC"]}]}},{"id":"title","name":"title","type":"character"},{"id":"website","name":"website","type":"character"},{"id":"link2","name":"Go to Website","type":"character","cell":[{"name":"a","attribs":{"href":"https://unstats.un.org/sdgs/dataportal","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unstats.un.org/wiki/display/SDGeHandbook/Home","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unstats.un.org/sdgs/dataContacts/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unstats.un.org/sdgapi/swagger/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://dtm.iom.int","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://www.migrationdataportal.org","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://gmdac.iom.int","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://worldmigrationreport.iom.int/wmr-2022-interactive/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://missingmigrants.iom.int","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://www.ctdatacollaborative.org/map","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://unfccc.int/process-and-meetings/the-paris-agreement/nationally-determined-contributions-ndcs","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]},{"name":"a","attribs":{"href":"https://www.un.org/two-zero/en/","target":"_blank"},"children":[{"name":"button","attribs":{"style":{"padding":"10px","background-color":"blue","color":"white","border":"none","border-radius":"5px"}},"children":["Go to Website"]}]}],"width":100}],"resizable":true,"filterable":true,"defaultPageSize":10,"minRows":5,"elementId":"filter1","dataKey":"334249931a36405b8edb98acc52a86d2"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.0.filterInput.attribs.onChange"],"jsHooks":[]}</script>
 </div>
 </div>
 
