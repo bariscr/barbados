@@ -21,3 +21,7 @@ _site/search.json
 _site/sitemap.xml
 .gitignore
 _site/search.json
+_site/site_libs/bootstrap/bootstrap.min 2.css
+_site/site_libs/quarto-dashboard/datatables.min 2.js
+_site/site_libs/quarto-dashboard/pdfmake.min 2.js
+_site/site_libs/quarto-dashboard/vfs_fonts 2.js
