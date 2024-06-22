@@ -5,3 +5,5 @@ functions/reactable_filters.R
 .quarto/idx/index.qmd.json
 .json
 
+.DS_Store
+.gitignore

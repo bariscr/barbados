@@ -1,0 +1,440 @@
+---
+title: "UN INFO API"
+format: html
+execute: 
+  eval: false
+embed-resources: true
+---
+
+Use cases for the UN INFO API with R.
+
+[API main page](https://api.uninfo.org/docs/)
+
+With support from: 
+
+Hadrien Jouet
+
+[Gitlab link](https://gitlab.tools.uninfo.org/dco/documentation)
+
+# Bearer token
+
+This is the first step to start using the API.
+
+Get the bearer token to authenticate the requests.
+
+If you have not saved your user name and password as environment variables, use the following code to set them in the login_body:
+
+email = "YOUR_EMAIL"
+password = "YOUR_PASSWORD"
+
+```{r}
+library(httr)
+library(jsonlite)
+library(tidyverse)
+library(reactable)
+
+login_url <- "https://api.uninfo.org/vx.y/user/login"
+
+# Define the login credentials
+login_body <- list(
+     email = Sys.getenv("UNAPI_USERNAME"), 
+     password = Sys.getenv("UNAPI_PW")
+)
+
+# Send the POST request
+login_response <- POST(login_url, body = login_body, encode = "json")
+
+# Extract the bearer token from the response
+login_content <- content(login_response, "parsed")
+bearer_token <- login_content$token
+
+print(login_content)
+print(bearer_token)
+```
+
+Define the headers to use when necessary:
+
+```{r}
+headers <- add_headers(
+  accept = "application/json",
+  `Content-Type` = "application/json",
+  Authorization = paste("Bearer", bearer_token)
+)
+```
+
+# Contact search
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/contact/search"
+response <- POST(url)
+
+if (status_code(response) == 200) {
+  content <- content(response, "parsed", simplifyVector = TRUE)
+  print(content)
+} else {
+  print(paste("Request failed with status code", status_code(response)))
+}
+
+results <- content$results
+
+```
+
+# Contact search by id
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/contact/10495"
+
+response <- GET(url, headers)
+
+if (status_code(response) == 200) {
+  content <- content(response, "parsed", simplifyVector = TRUE)
+  print(content)
+} else {
+  print(paste("Request failed with status code", status_code(response)))
+}
+
+```
+
+# Plan search
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/plan/search"
+
+response <- POST(url, headers)
+
+if (status_code(response) == 200) {
+  content <- content(response, "parsed", simplifyVector = TRUE)
+} else {
+  print(paste("Request failed with status code", status_code(response)))
+}
+
+results <- content$results
+
+```
+
+# Plan details for selected plan
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/plan/1193"
+
+response <- GET(url, headers)
+
+if (status_code(response) == 200) {
+  content <- content(response, "parsed", simplifyVector = TRUE)
+} else {
+  print(paste("Request failed with status code", status_code(response)))
+}
+
+surveys <- content$planSurveys
+planSurveyVersion <- surveys$planSurveyVersion
+
+entityPrototypes <- content$entityPrototypes
+
+```
+
+## entityPrototypes
+
+```{r}
+entityPrototypes |> 
+    select(id, code, coreentityTypeId, name)
+
+```
+
+# Outcomes
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=OC&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=1193"
+
+response <- GET(url, encode = "json")
+content <- content(response)
+
+outcomes <- data.frame()
+
+for (i in 1:length(content)) {  
+
+  data <-   
+  data.frame(
+  id = content[[i]]$id,
+  parentId = content[[i]]$parentId,
+  parentName = content[[i]]$parentName,
+  name = content[[i]]$name,
+  code = content[[i]]$code,
+  description = content[[i]]$description,
+  startDate = content[[i]]$startDate,
+  endDate = content[[i]]$endDate)
+
+  outcomes <- bind_rows(outcomes, data)
+
+}
+
+outcomes |> 
+    reactable()
+
+
+```
+
+
+# Outputs
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=OU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=1193"
+
+response <- GET(url, encode = "json")
+content <- content(response)
+
+outputs <- data.frame()
+
+for (i in 1:length(content)) {  
+
+  data <-   
+  data.frame(
+  id = content[[i]]$id,
+  parentId = content[[i]]$parentId,
+  parentName = content[[i]]$parentName,
+  name = content[[i]]$name,
+  code = content[[i]]$code,
+  description = content[[i]]$description,
+  startDate = content[[i]]$startDate,
+  endDate = content[[i]]$endDate,
+  metrics = I(list(content[[i]]$metrics)),
+  links = I(list(content[[i]]$links))
+  )
+
+  outputs <- bind_rows(outputs, data)
+
+}
+
+outputs |> 
+    reactable()
+
+```
+
+# Get the suboutput ids for the selected plan
+
+Requires paginated search.
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/plan/entity/search"
+
+body <- list(
+  coreentityTypeIds = list(9),
+  planIds = list(1193)
+)
+
+suboutput_id_list <- list()
+
+response <- POST(url, headers, body = body, encode = "json")
+
+total_pages <- content(response)$pagination$pages
+
+for (page in 1:total_pages) {
+  body$page <- page
+  response <- POST(url, headers, body = body, encode = "json")  
+    for (i in 1:length(content(response)$results)) {
+  id_code <- ((page - 1) * 50) + i
+  suboutput_id_list[[id_code]] <- content(response)$results[[i]]$id
+    }
+}
+
+suboutput_id_list <- suboutput_id_list |> unlist()
+
+```
+
+# Get the suboutput id and expenditure info
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=SOU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&planIds=1193"
+
+response <- GET(url, headers, encode = "json")
+content <- content(response)
+```
+
+# Sub-output id 
+
+Drill down in the sub-output id
+
+For one suboutput id
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/plan/entity/92168"
+
+response <- GET(url, headers)
+
+if (status_code(response) == 200) {
+  content <- content(response, "parsed", simplifyVector = TRUE)
+} else {
+  print(paste("Request failed with status code", status_code(response)))
+}
+
+planEntityVersion <- content$planEntityVersion
+entityPrototype <- content$entityPrototype
+properties <- entityPrototype$properties
+
+data <- 
+    data.frame(
+    planEntityId = planEntityVersion$planEntityId,
+    code = planEntityVersion$code,
+    description = planEntityVersion$description,
+    name = planEntityVersion$name,
+    parentId = content$parentId,
+    parentName = content$parent$planEntityVersion$name,
+    startDate = planEntityVersion$startDate,
+    endDate = planEntityVersion$endDate,
+    countryId = I(list(content$locations$countryId)),
+    metrics = I(list(properties$metrics)),
+    organizations = I(list(content$organizations)),
+    humanRightsMarkers =    content$humanRightsMarkers$dataitemVersion$name,
+    genderMarkers =     content$genderMarkers$dataitemVersion$name,
+    sustainingPeaceMarkers = I(list(content$sustainingPeaceMarkers$dataitemVersion$name)),
+    qcprFunctions = I(list(content$qcprFunctions$dataitemVersion)),
+    goal_id = I(list(content$planEntitySdgs$goalId)),
+    target_id = I(list(content$planEntitySdgs$targetId)),
+    narratives = I(list(content$planEntityNarratives$planEntityNarrativeVersion$value))
+)
+
+data |> reactable()
+
+```
+
+# All suboutputs in long format
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&planIds=1193"
+
+content <- fromJSON(url)
+
+content2 <- 
+    content |> 
+    unnest(metrics) |> 
+    rename(goal_id = id,
+           goal_name = name) |>
+    unnest(links) |> 
+    rename(marker_id = id,
+           marker_name = name) |>
+    unnest(items) |> 
+    rename(item_id = id,
+           item_name = name) |>
+    unnest(activities)
+
+content2 |> reactable()
+content2 |> distinct(id) |> nrow()
+```
+
+# Markers and financials
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&grouping=planEntity&planEntityType=SOU&linkTypes=Gender%20Marker&linkTypes=Human%20Rights%20Marker&Sustaining%20Peace%20MarkerHumanitarian%20Marker&planIds=1193"
+
+content <- fromJSON(url)
+
+content$links
+
+content2 <- 
+    content |> 
+    unnest(metrics) |> 
+    rename(suboutput_id = id,
+           suboutput_name = name) |>
+    unnest(links) |> 
+    rename(marker_id = id,
+           marker_name = name) |>
+    unnest(items) |> 
+    rename(item_id = id,
+           item_name = name) |>
+    unnest(activities)
+
+content2 |> reactable()
+content2 |> distinct(suboutput_id) |> nrow()
+```
+
+# All common indicators
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/plan/public/entity/search"
+
+response <- POST(url)
+
+content(response)
+
+```
+
+# Form search paginated
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/form/search"
+response <- POST(url, headers)
+content <- content(response)
+```
+
+# Form search by id
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/form/972"
+response <- GET(url, headers)
+content <- content(response)
+```
+
+# Indicator search paginated
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/indicator/search"
+response <- POST(url, headers)
+content <- content(response)
+```
+
+# Data item search paginated
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/dataitem/search" 
+response <- POST(url, headers)
+content <- content(response)
+
+```
+
+# Country search paginated
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/country/search"
+response <- POST(url, headers)
+content <- content(response)
+
+```
+
+# Completion search paginated
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/completion/search?"
+response <- POST(url, headers)
+content <- content(response)
+
+```
+
+# Workspace search paginated
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/workspace/search"
+response <- POST(url, headers)
+content <- content(response)
+
+```
+
+# Plan public
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/plan/public/1193"
+response <- GET(url, headers)
+content <- content(response)
+
+content$planEntities
+```
+
+# Report on suboutputs with missing information and aggregated statistics
+
+```{r}
+url <- "https://api.uninfo.org/vx.y/plan/evaluate/1193"
+response <- GET(url, headers)
+content <- content(response)
+
+```
+
+
+

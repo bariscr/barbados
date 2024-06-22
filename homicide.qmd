@@ -65,6 +65,7 @@ sdg_data |>
   left_join(sdg_series, by = c("series" = "code")) |> 
    select(name, timePeriodStart,  indicator, series, description, Sex, value) 
 
+#openxlsx::write.xlsx(sdg_homicide_data, "/Users/barisucar/Desktop/sdg_homicide_data.xlsx")
 ```
 
 ### Tabset {.tabset}
@@ -258,5 +259,7 @@ p
 #### SDG Series
 
 ```{r}
-sdg_series |> reactable(searchable = TRUE)
+sdg_series |> distinct() |> reactable(searchable = TRUE)
 ```
+
+
