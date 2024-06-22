@@ -4928,7 +4928,7 @@ vertical-align: -.125em;
 <section id="plan-details-for-selected-plan" class="level1">
 <h1>Plan details for selected plan</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/plan/1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/plan/YOUR_PLAN_ID&quot;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, headers)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -4954,7 +4954,7 @@ vertical-align: -.125em;
 <section id="outcomes" class="level1">
 <h1>Outcomes</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=OC&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;planIds=1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=OC&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;planIds=YOUR_PLAN_ID&quot;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, <span class="at">encode =</span> <span class="st">&quot;json&quot;</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> <span class="fu">content</span>(response)</span>
@@ -4985,7 +4985,7 @@ vertical-align: -.125em;
 <section id="outputs" class="level1">
 <h1>Outputs</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=OU&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;planIds=1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=OU&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;planIds=YOUR_PLAN_ID&quot;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, <span class="at">encode =</span> <span class="st">&quot;json&quot;</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> <span class="fu">content</span>(response)</span>
@@ -5024,7 +5024,7 @@ vertical-align: -.125em;
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>body <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">coreentityTypeIds =</span> <span class="fu">list</span>(<span class="dv">9</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">planIds =</span> <span class="fu">list</span>(<span class="dv">1193</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">planIds =</span> <span class="fu">list</span>(YOUR_PLAN_ID)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>suboutput_id_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
@@ -5048,7 +5048,7 @@ vertical-align: -.125em;
 <section id="get-the-suboutput-id-and-expenditure-info" class="level1">
 <h1>Get the suboutput id and expenditure info</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=SOU&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;planIds=1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=SOU&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;planIds=YOUR_PLAN_ID&quot;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, headers, <span class="at">encode =</span> <span class="st">&quot;json&quot;</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> <span class="fu">content</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -5101,7 +5101,7 @@ vertical-align: -.125em;
 <section id="all-suboutputs-in-long-format" class="level1">
 <h1>All suboutputs in long format</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;planIds=1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;planIds=YOUR_PLAN_ID&quot;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(url)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -5125,7 +5125,7 @@ vertical-align: -.125em;
 <section id="markers-and-financials" class="level1">
 <h1>Markers and financials</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=SOU&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;Sustaining%20Peace%20MarkerHumanitarian%20Marker&amp;planIds=1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/sustainableDevelopmentGoal/overviewReport?exclude=organizations&amp;grouping=planEntity&amp;planEntityType=SOU&amp;linkTypes=Gender%20Marker&amp;linkTypes=Human%20Rights%20Marker&amp;Sustaining%20Peace%20MarkerHumanitarian%20Marker&amp;planIds=YOUR_PLAN_ID&quot;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(url)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -5217,7 +5217,7 @@ vertical-align: -.125em;
 <section id="plan-public" class="level1">
 <h1>Plan public</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/plan/public/1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/plan/public/YOUR_PLAN_ID&quot;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, headers)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> <span class="fu">content</span>(response)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -5227,7 +5227,7 @@ vertical-align: -.125em;
 <section id="report-on-suboutputs-with-missing-information-and-aggregated-statistics" class="level1">
 <h1>Report on suboutputs with missing information and aggregated statistics</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/plan/evaluate/1193&quot;</span></span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://api.uninfo.org/vx.y/plan/evaluate/YOUR_PLAN_ID&quot;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, headers)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> <span class="fu">content</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
